@@ -11,6 +11,7 @@ public class Professor extends Funcionario {
     private List<Pedido> pedidos;
     private float precoPedidos;
     private boolean pedidosPagos;
+    private Integer copiasDisponiveis;
 
     public Professor(String nome, String sexo, Date dataNascimento, String matricula, String unidade, Departamento departamento) {
         super(nome, sexo, dataNascimento, matricula, unidade, departamento);
@@ -18,6 +19,7 @@ public class Professor extends Funcionario {
         this.pedidos = new ArrayList<Pedido>();
         this.precoPedidos = 0;
         this.pedidosPagos = false;
+        this.copiasDisponiveis = 200;
     }
 
     public List<Disciplina> getDisciplinas() {
@@ -59,4 +61,30 @@ public class Professor extends Funcionario {
     public void setPedidosPagos(boolean pedidosPagos) {
         this.pedidosPagos = pedidosPagos;
     }
+
+    public String regristraListaPedidos() {
+        int counter = 0;
+        Secretario secImpressao =  this.disciplinas
+                                    .get(0)
+                                    .getCurso()
+                                    .getCentralImpressao();
+        if(this.pedidos != null) {
+            for(Pedido p: this.pedidos) {
+                p.setStatus("Solicitado");
+                secImpressao.adicionaNovoPedido(p);
+
+                for(Arquivo arq : p.getArquivosList()) {
+                    counter += arq.getCopias();
+                    this.copiasDisponiveis -= counter;
+                    if(copiasDisponiveis < 0) {
+                        this.precoPedidos = 0.25F * Math.abs(copiasDisponiveis);
+                    }
+                }
+            }
+            return "Pedido realizado com sucesso pelo Professor!";
+        }
+        return "Erro ao fazer um pedido";
+
+    }
+
 }

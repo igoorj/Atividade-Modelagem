@@ -9,6 +9,7 @@ public class Aluno extends Usuario{
     private String matricula;
     private Curso curso;
     private static Integer copiasGratuitas = 50;
+    private int copiasDisponiveis;
     private List<Pedido> pedidos;
     private Semestre semestre;
     private float precoPedidos;
@@ -21,9 +22,22 @@ public class Aluno extends Usuario{
         this.pedidosPagos = false;
         this.precoPedidos = 0;
         this.pedidos = new ArrayList<Pedido>();
+        this.copiasDisponiveis = 50;
     }
 
     public Aluno() { }
+
+    public static void setCopiasGratuitas(Integer copiasGratuitas) {
+        Aluno.copiasGratuitas = copiasGratuitas;
+    }
+
+    public int getCopiasDisponiveis() {
+        return copiasDisponiveis;
+    }
+
+    public void setCopiasDisponiveis(int copiasDisponiveis) {
+        this.copiasDisponiveis = copiasDisponiveis;
+    }
 
     public String getMatricula() {
         return matricula;
@@ -60,4 +74,26 @@ public class Aluno extends Usuario{
     public void setPedidosPagos(boolean pedidosPagos) {
         this.pedidosPagos = pedidosPagos;
     }
+
+    public String regristraListaPedidos() {
+        int counter = 0;
+        Secretario secImpressao =  this.curso.getCentralImpressao();
+        if(this.pedidos != null) {
+            for(Pedido p: this.pedidos) {
+                p.setStatus("Solicitado");
+                secImpressao.adicionaNovoPedido(p);
+
+                for(Arquivo arq : p.getArquivosList()) {
+                    counter += arq.getCopias();
+                    this.copiasDisponiveis -= counter;
+                    if(copiasDisponiveis < 0) {
+                        this.precoPedidos = 0.25F * Math.abs(copiasDisponiveis);
+                    }
+                }
+            }
+            return "Pedido realizado com sucesso pelo Aluno!";
+        }
+        return "Erro ao fazer um pedido";
+    }
+
 }

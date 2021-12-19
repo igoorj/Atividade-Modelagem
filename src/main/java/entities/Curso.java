@@ -9,16 +9,26 @@ public class Curso {
     private String nome;
     private Semestre semestre;
     private List<Disciplina> disciplinaList;
+    private Secretario centralImpressao;
 
-    public Curso(Long id, String nome, Semestre semestre) {
+    public Curso(Long id, String nome, Semestre semestre, Secretario secretario) {
         super();
         this.id = id;
         this.nome = nome;
         this.semestre = semestre;
         this.disciplinaList = new ArrayList<Disciplina>();
+        this.centralImpressao = secretario;
     }
 
     public Curso() { }
+
+    public Secretario getCentralImpressao() {
+        return centralImpressao;
+    }
+
+    public void setCentralImpressao(Secretario centralImpressao) {
+        this.centralImpressao = centralImpressao;
+    }
 
     public Long getId() {
         return id;
@@ -50,5 +60,9 @@ public class Curso {
 
     public void setDisciplinaList(List<Disciplina> disciplinaList) {
         this.disciplinaList = disciplinaList;
+        for(Disciplina d: disciplinaList) {
+            d.setCurso(this);
+        }
     }
+
 }

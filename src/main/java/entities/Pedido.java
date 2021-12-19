@@ -16,6 +16,7 @@ public class Pedido {
         this.date = date;
         this.autor = autor;
         this.arquivosList = new ArrayList<>();
+        this.secretarioImpressao = new Secretario("Joana", "Feminino", new Date(), "4565787", "Juiz de Fora", new Departamento("Ciencia da Computacao"), 5, 8);
     }
 
     public Date getDate() {
