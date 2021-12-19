@@ -132,6 +132,21 @@ public class main {
         System.out.println(professor03.regristraListaPedidos());
         System.out.println(professor03.getPrecoPedidos());
         System.out.println("----------------------------------");
-    }
 
+
+        // Testando o pagamento de aluno caso exceda numero maximo de copias gratuitas( idem para professor)
+        System.out.println("\nAluno efetuando pagamento e secretario liberando para fila de impressao");
+        List<Arquivo> arquivosPedido3 = new ArrayList<>();
+        Arquivo arq2 = new Arquivo("PDF ATIVIDADE 01 - MODELAGEM", 60, "Preto");
+        arquivosPedido3.add(arq2);
+        Aluno aluno5 = new Aluno("Arnaldo","Masculino", new Date(), "23457766", curso);
+        Pedido pedido5 = new Pedido(new Date(), aluno);
+        pedido5.setArquivosList(arquivosPedido3);
+        List<Pedido> pedidos4 = new ArrayList<>();
+        pedidos4.add(pedido5);
+        aluno5.setPedidos(pedidos4);
+        aluno5.regristraListaPedidos();
+        aluno5.efetuarPagamento("Cartão de Credito", aluno5.getPrecoPedidos());
+        System.out.println("----------------------------------");
+    }
 }

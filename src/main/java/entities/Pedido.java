@@ -11,6 +11,7 @@ public class Pedido {
     private List<Arquivo> arquivosList;
     private Secretario secretarioImpressao;
     private String status;
+    private boolean pago = false;
 
     public Pedido(Date date, Usuario autor) {
         this.date = date;
@@ -41,6 +42,14 @@ public class Pedido {
 
     public void setSecretarioImpressao(Secretario secretarioImpressao) {
         this.secretarioImpressao = secretarioImpressao;
+    }
+
+    public boolean isPago() {
+        return pago;
+    }
+
+    public void setPago(boolean pago) {
+        this.pago = pago;
     }
 
     public List<Arquivo> getArquivosList() {

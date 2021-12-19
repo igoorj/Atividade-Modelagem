@@ -86,5 +86,10 @@ public class Professor extends Funcionario {
         return "Erro ao fazer um pedido";
 
     }
-
+    public void efetuarPagamento(String formaPagamento, float total) {
+        for (Pedido p : this.pedidos) {
+            p.setPago(true);
+        }
+        System.out.println("Pagamento realizado com sucesso!");
+    }
 }

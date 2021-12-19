@@ -73,15 +73,17 @@ public class Secretario extends Funcionario {
     public String registrandoPedidos() {
         if(this.pedidoList != null) {
             for(Pedido p: pedidoList) {
-                if(registroList == null) {
-                    p.setStatus("Concluido"); // fila vazia
-                } else {
-                    p.setStatus("Na fila");   // já há pedios a serem feitos
+                if(p.isPago()) { // só vai para a fila de impressao caso esteja pago
+                    if(registroList == null) {
+                        p.setStatus("Concluido"); // fila vazia
+                    } else {
+                        p.setStatus("Na fila");   // já há pedios a serem feitos
+                    }
+                    this.registroList.add(p);     // adicionando na lista de registros
+                    this.pedidoList.remove(p);    // removendo da lista de pedidos
                 }
-                this.registroList.add(p);     // adicionando na lista de registros
-                this.pedidoList.remove(p);    // removendo da lista de pedidos
+                return "Pedidos da lista registrados com sucesso!";
             }
-            return "Pedidos da lista registrados com sucesso!";
         }
         return "Não ha pedidos pendentes";
     }
